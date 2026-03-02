@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Give Hope · CMF Orphanage Donations</title>
+    <meta name="description"
+        content="Support the CMF Orphanage. Your generous donation feeds, clothes, and educates children who need it most. Give securely with Paystack.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon"
+        href="https://firebasestorage.googleapis.com/v0/b/mealone-29b00.firebasestorage.app/o/WhatsApp%20Image%202026-01-27%20at%207.32.38%20AM.jpeg?alt=media&token=6913ddcf-3f97-40a7-9164-9e0b77eab524"
+        type="image/jpeg">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    <style>
+        :root {
+            --brand-50: #fff5f5;
+            --brand-100: #ffe2e2;
+            --brand-200: #ffc9c9;
+            --brand-400: #f87171;
+            --brand-500: #ef4444;
+            --brand-600: #dc2626;
+            --brand-700: #b91c1c;
+            --ink-900: #311111;
+            --ink-700: #5b2323;
+            --surface: #ffffff;
+            --surface-2: #fffdfd;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #fca5a5 transparent;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(239, 68, 68, 0.12), transparent 42%),
+                radial-gradient(circle at 100% 0%, rgba(185, 28, 28, 0.10), transparent 38%),
+                linear-gradient(135deg, #fffdfd 0%, #fff7f7 45%, #fff1f1 100%);
+            color: var(--ink-900);
+        }
+
+        .brand-serif {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.01em;
+        }
+
+        /* ── Animations ── */
+        .fade-in {
+            animation: fadeIn 0.45s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-up {
+            animation: slideUp 0.6s cubic-bezier(.22, 1, .36, 1) both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.35);
+            }
+
+            50% {
+                box-shadow: 0 0 0 14px rgba(220, 38, 38, 0);
+            }
+        }
+
+        /* Counter animation */
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .counter-animated {
+            animation: countUp 0.5s ease-out both;
+        }
+
+        /* ── Shared components ── */
+        .section-card {
+            background: linear-gradient(145deg, var(--surface), var(--surface-2));
+            border: 1px solid #ffe4e6;
+            border-radius: 1.25rem;
+            box-shadow: 0 14px 30px rgba(127, 29, 29, 0.08);
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+            border-radius: 999px;
+            padding: .3rem .75rem;
+            font-size: .68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+        }
+
+        .btn-brand {
+            background: linear-gradient(125deg, var(--brand-600), var(--brand-700));
+            color: #fff;
+            border: 1px solid transparent;
+            border-radius: .9rem;
+            font-weight: 800;
+            transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+            box-shadow: 0 10px 20px rgba(185, 28, 28, .24);
+        }
+
+        .btn-brand:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 14px 28px rgba(185, 28, 28, .32);
+        }
+
+        .btn-brand:active {
+            transform: translateY(0);
+        }
+
+        .btn-outline-brand {
+            background: #fff;
+            color: var(--brand-700);
+            border: 1px solid #fecaca;
+            border-radius: .85rem;
+            font-weight: 700;
+            transition: all .2s ease;
+        }
+
+        .btn-outline-brand:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+
+        .input-brand {
+            width: 100%;
+            border: 1px solid #fecaca;
+            border-radius: .85rem;
+            background: #fff;
+            padding: .75rem .95rem;
+            outline: none;
+            transition: border-color .2s ease, box-shadow .2s ease;
+            font-family: 'Manrope', sans-serif;
+            color: var(--ink-900);
+        }
+
+        .input-brand:focus {
+            border-color: var(--brand-500);
+            box-shadow: 0 0 0 3px rgba(248, 113, 113, .18);
+        }
+
+        .metric-card {
+            border-radius: 1rem;
+            border: 1px solid #fecaca;
+            padding: 1.25rem 1.5rem;
+            background: #fff;
+        }
+
+        .metric-card.metric-main {
+            color: #fff;
+            border: none;
+            background: linear-gradient(130deg, #dc2626, #991b1b);
+            box-shadow: 0 12px 24px rgba(153, 27, 27, .25);
+        }
+
+        .app-logo {
+            object-fit: cover;
+            object-position: center;
+            border-radius: 1rem;
+            border: 2px solid #fecaca;
+            box-shadow: 0 10px 20px rgba(127, 29, 29, .2);
+        }
+
+        /* ── Hero ── */
+        .hero-section {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(20, 5, 5, .82) 45%, rgba(20, 5, 5, .35) 100%);
+        }
+
+        .hero-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transform: scale(1.03);
+            transition: transform 8s ease-out;
+        }
+
+        .hero-img.loaded {
+            transform: scale(1);
+        }
+
+        /* ── Amount chips ── */
+        .amount-chip {
+            border: 2px solid #fecaca;
+            border-radius: .75rem;
+            background: #fff;
+            color: var(--ink-700);
+            font-weight: 700;
+            font-size: .9rem;
+            padding: .6rem 1rem;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+        .amount-chip:hover {
+            border-color: var(--brand-400);
+            background: #fef2f2;
+        }
+
+        .amount-chip.active {
+            background: linear-gradient(125deg, var(--brand-600), var(--brand-700));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 6px 16px rgba(185, 28, 28, .28);
+            transform: translateY(-1px);
+        }
+
+        /* ── Donor toggle ── */
+        .donor-toggle {
+            display: flex;
+            gap: .75rem;
+            flex-wrap: wrap;
+        }
+
+        .donor-option {
+            flex: 1;
+            min-width: 130px;
+            cursor: pointer;
+        }
+
+        .donor-option input[type="radio"] {
+            display: none;
+        }
+
+        .donor-option-label {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            border: 2px solid #fecaca;
+            border-radius: 1rem;
+            padding: .85rem 1.1rem;
+            background: #fff;
+            font-weight: 700;
+            font-size: .88rem;
+            color: var(--ink-700);
+            transition: all .22s ease;
+            cursor: pointer;
+        }
+
+        .donor-option-label .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fee2e2;
+            color: var(--brand-600);
+            font-size: .9rem;
+            transition: background .22s, color .22s;
+        }
+
+        .donor-option input:checked+.donor-option-label {
+            border-color: var(--brand-500);
+            background: linear-gradient(135deg, #fff5f5, #fff);
+            box-shadow: 0 4px 14px rgba(185, 28, 28, .14);
+        }
+
+        .donor-option input:checked+.donor-option-label .icon-circle {
+            background: linear-gradient(125deg, var(--brand-600), var(--brand-700));
+            color: #fff;
+        }
+
+        /* ── Gallery ── */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto auto;
+            gap: 1rem;
+        }
+
+        .gallery-grid .img-main {
+            grid-row: span 2;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 1.15rem;
+            display: block;
+            transition: transform .4s ease, filter .4s ease;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 1.15rem;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.04);
+            filter: brightness(1.06);
+        }
+
+        /* ── Impact cards ── */
+        .impact-card {
+            border-radius: 1.15rem;
+            background: #fff;
+            border: 1px solid #fecaca;
+            padding: 1.75rem 1.5rem;
+            transition: transform .25s ease, box-shadow .25s ease;
+            text-align: center;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 36px rgba(127, 29, 29, .13);
+        }
+
+        .impact-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(130deg, #dc2626, #991b1b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.3rem;
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(185, 28, 28, .28);
+        }
+
+        /* ── Toast ── */
+        #toast {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ink-900);
+            color: #fff;
+            padding: .75rem 1.6rem;
+            border-radius: 999px;
+            font-size: .88rem;
+            font-weight: 700;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity .3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #toast.show {
+            opacity: 1;
+        }
+
+        #toast.success {
+            background: linear-gradient(125deg, #15803d, #166534);
+        }
+
+        #toast.error {
+            background: linear-gradient(125deg, #dc2626, #991b1b);
+        }
+
+        /* ── Success overlay ── */
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            background: rgba(20, 5, 5, .7);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .success-card {
+            background: #fff;
+            border-radius: 1.5rem;
+            max-width: 420px;
+            width: 100%;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 24px 56px rgba(127, 29, 29, .25);
+            animation: slideUp .5s ease;
+        }
+
+        .checkmark-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1.25rem;
+            background: linear-gradient(130deg, #16a34a, #15803d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            box-shadow: 0 12px 28px rgba(22, 163, 74, .3);
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+
+        /* ── Section divider ── */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #fca5a5, transparent);
+            margin: 0;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width:640px) {
+            .hero-section {
+                min-height: 100vh;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .gallery-grid .img-main {
+                grid-row: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ -->
+    <nav
+        class="flex justify-between items-center px-4 md:px-8 py-3 border-b border-red-100 bg-white/90 backdrop-blur-md sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <img src="https://firebasestorage.googleapis.com/v0/b/mealone-29b00.firebasestorage.app/o/WhatsApp%20Image%202026-01-27%20at%207.32.38%20AM.jpeg?alt=media&token=6913ddcf-3f97-40a7-9164-9e0b77eab524"
+                alt="CMF logo" class="app-logo w-11 h-11">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-[.2em] text-red-500">CMF UDS</p>
+                <p class="font-extrabold text-lg leading-tight text-red-900"
+                    style="font-family:'Playfair Display',serif;">Orphanage</p>
+            </div>
+        </div>
+        <a href="#donate-form" class="btn-brand px-5 py-2.5 text-sm hidden sm:inline-flex items-center gap-2">
+            <i class="fa-solid fa-heart"></i> Donate Now
+        </a>
+    </nav>
+
+
+    <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+    <section class="hero-section">
+        <img id="hero-img" class="hero-img"
+            src="https://firebasestorage.googleapis.com/v0/b/mealone-29b00.firebasestorage.app/o/4.png?alt=media&token=96e8b7bc-03d7-45f2-8346-fc4ae5f518bd"
+            alt="Children at the orphanage">
+        <div class="hero-overlay"></div>
+
+        <!-- Decorative blobs -->
+        <div
+            style="position:absolute;inset:auto -60px -60px auto;width:260px;height:260px;border-radius:999px;background:radial-gradient(circle,rgba(248,113,113,0.22),transparent 70%);pointer-events:none;">
+        </div>
+        <div
+            style="position:absolute;top:60px;right:100px;width:160px;height:160px;border-radius:999px;background:radial-gradient(circle,rgba(248,113,113,0.15),transparent 70%);pointer-events:none;">
+        </div>
+
+        <div class="relative z-10 px-6 md:px-16 max-w-3xl slide-up">
+            <span class="brand-badge mb-5 inline-flex"
+                style="background:rgba(254,226,226,.15);border-color:rgba(252,165,165,.4);color:#fecaca;">
+                <i class="fa-solid fa-hands-holding-child"></i> CMF Orphanage Fund
+            </span>
+            <h1 class="brand-serif text-4xl sm:text-5xl md:text-6xl text-white leading-tight mb-5">
+                Give a Child<br>a Fighting<br><span style="color:#fca5a5;">Chance.</span>
+            </h1>
+            <p class="text-red-100/90 text-base md:text-lg leading-relaxed max-w-xl mb-8">
+                Behind every smile is a story of resilience. Your gift of any size provides meals, books,
+                love — and the promise of a brighter tomorrow for children in our care.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#donate-form" class="btn-brand px-8 py-4 text-base flex items-center gap-2 pulse-glow">
+                    <i class="fa-solid fa-heart"></i> Give Now
+                </a>
+                <a href="#our-impact" class="btn-outline-brand px-7 py-4 text-base flex items-center gap-2"
+                    style="background:rgba(255,255,255,.12);color:#fff;border-color:rgba(252,165,165,.5);">
+                    <i class="fa-solid fa-circle-play"></i> Learn More
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll hint -->
+        <div
+            style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:#fca5a5;font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.4rem;animation:fadeIn 1s 1s both;">
+            <span>Scroll</span>
+            <i class="fa-solid fa-chevron-down" style="animation:bounce 1.4s infinite;"></i>
+        </div>
+    </section>
+
+    <style>
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(5px);
+            }
+        }
+    </style>
+
+
+    <!-- ═══════════════════════════════ STATS BAR ═══════════════════════════ -->
+    <section class="py-12 px-4 md:px-8 max-w-5xl mx-auto" id="our-impact">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div class="metric-card metric-main slide-up text-center">
+                <i class="fa-solid fa-child text-red-200 text-3xl mb-2"></i>
+                <h2 class="text-4xl font-black" data-counter="120" id="ctr-children">0</h2>
+                <p class="text-red-100 text-xs font-bold uppercase tracking-wider mt-1">Children Supported</p>
+            </div>
+            <div class="metric-card slide-up text-center" style="animation-delay:.1s">
+                <i class="fa-solid fa-bowl-food text-red-400 text-3xl mb-2"></i>
+                <h2 class="text-4xl font-black text-red-900" data-counter="43800" id="ctr-meals">0</h2>
+                <p class="text-red-600 text-xs font-bold uppercase tracking-wider mt-1">Meals Served / Year</p>
+            </div>
+            <div class="metric-card slide-up text-center" style="animation-delay:.2s">
+                <i class="fa-solid fa-graduation-cap text-red-400 text-3xl mb-2"></i>
+                <h2 class="text-4xl font-black text-red-900" data-counter="15" id="ctr-years">0</h2>
+                <p class="text-red-600 text-xs font-bold uppercase tracking-wider mt-1">Years of Service</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+
+    <!-- ═══════════════════════════════ HOW YOUR GIFT HELPS ════════════════ -->
+    <section class="py-14 px-4 md:px-8 max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+            <span class="brand-badge mb-3">Your Impact</span>
+            <h2 class="brand-serif text-3xl md:text-4xl text-red-900">How Your Gift Helps</h2>
+            <p class="text-red-800/70 mt-3 max-w-lg mx-auto text-sm md:text-base">Every cedi given transforms a life.
+                Here's what your generosity makes possible.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fa-solid fa-utensils"></i></div>
+                <h3 class="font-extrabold text-red-900 text-lg mb-1">Feed & Nourish</h3>
+                <p class="text-red-700/80 text-sm leading-relaxed">GHS 20 provides three nutritious meals a day for a
+                    child for a full week.</p>
+            </div>
+            <div class="impact-card" style="border-color:#fee2e2;">
+                <div class="impact-icon"><i class="fa-solid fa-book-open"></i></div>
+                <h3 class="font-extrabold text-red-900 text-lg mb-1">Educate & Inspire</h3>
+                <p class="text-red-700/80 text-sm leading-relaxed">GHS 100 buys a full term's worth of school supplies
+                    and uniforms.</p>
+            </div>
+            <div class="impact-card">
+                <div class="impact-icon"><i class="fa-solid fa-house-heart"></i></div>
+                <h3 class="font-extrabold text-red-900 text-lg mb-1">Shelter & Care</h3>
+                <p class="text-red-700/80 text-sm leading-relaxed">GHS 500 contributes to safe housing and essential
+                    medical care for a month.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+
+    <!-- ═══════════════════════════════ IMAGE GALLERY ═══════════════════════ -->
+    <section class="py-14 px-4 md:px-8 max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+            <span class="brand-badge mb-3">Life at the Orphanage</span>
+            <h2 class="brand-serif text-3xl md:text-4xl text-red-900">Glimpses of Joy</h2>
+            <p class="text-red-800/70 mt-3 max-w-lg mx-auto text-sm">Behind every photo is a child whose life has been
+                touched by kindness.</p>
+        </div>
+        <div class="gallery-grid" style="max-height:560px;">
+            <!-- Large left -->
+            <div class="gallery-item img-main">
+                <img class="gallery-img" style="min-height:100%;"
+                    src="https://firebasestorage.googleapis.com/v0/b/mealone-29b00.firebasestorage.app/o/Layer%204.png?alt=media&token=33eb1f81-7378-4eaa-9c14-3d5d064069e7"
+                    alt="Children playing">
+            </div>
+            <!-- Top right -->
+            <div class="gallery-item">
+                <img class="gallery-img" style="height:260px;"
+                    src="https://firebasestorage.googleapis.com/v0/b/mealone-29b00.firebasestorage.app/o/Layer%205.png?alt=media&token=dcc048a6-eefb-4c93-95b5-45e4bf39d106"
+                    alt="Children learning">
+            </div>
+            <!-- Bottom right -->
+            <div class="gallery-item">
+                <img class="gallery-img" style="height:260px;"
+                    src="https://firebasestorage.googleapis.com/v0/b/mealone-29b00.firebasestorage.app/o/Layer%203.png?alt=media&token=b0046183-90e8-497b-b4c4-532bee48e545"
+                    alt="Children at mealtime">
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+
+    <!-- ═══════════════════════════════ DONATE FORM ════════════════════════ -->
+    <section class="py-14 px-4 md:px-8 max-w-2xl mx-auto" id="donate-form">
+        <div class="text-center mb-8">
+            <span class="brand-badge mb-3"><i class="fa-solid fa-heart"></i> Secure Giving</span>
+            <h2 class="brand-serif text-3xl md:text-4xl text-red-900">Make Your Gift Today</h2>
+            <p class="text-red-800/70 mt-3 text-sm md:text-base">100% of your donation goes directly to the children.
+                Secured by Paystack.</p>
+        </div>
+
+        <div class="section-card p-6 md:p-8">
+
+            <!-- ① Amount Selection -->
+            <div class="mb-7">
+                <label class="block text-xs font-bold text-red-700 uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-coins mr-1"></i> Choose Amount (GHS)
+                </label>
+                <div class="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-4" id="chip-grid">
+                    <button class="amount-chip" data-amount="20" onclick="selectChip(this)">GHS 20</button>
+                    <button class="amount-chip" data-amount="50" onclick="selectChip(this)">GHS 50</button>
+                    <button class="amount-chip active" data-amount="100" onclick="selectChip(this)">GHS 100</button>
+                    <button class="amount-chip" data-amount="200" onclick="selectChip(this)">GHS 200</button>
+                    <button class="amount-chip" data-amount="500" onclick="selectChip(this)">GHS 500</button>
+                </div>
+                <div class="relative">
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-red-400 text-sm">GHS</span>
+                    <input type="number" id="amount-input" class="input-brand pl-14"
+                        placeholder="Or enter custom amount…" min="1" oninput="onCustomAmount(this)" value="100">
+                </div>
+            </div>
+
+            <!-- ② Donor Identity -->
+            <div class="mb-7">
+                <label class="block text-xs font-bold text-red-700 uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-user-shield mr-1"></i> Your Identity
+                </label>
+                <div class="donor-toggle">
+                    <label class="donor-option">
+                        <input type="radio" name="donor-type" id="radio-anonymous" value="anonymous" checked
+                            onchange="toggleDonorFields()">
+                        <span class="donor-option-label">
+                            <span class="icon-circle"><i class="fa-solid fa-mask"></i></span>
+                            Stay Anonymous
+                        </span>
+                    </label>
+                    <label class="donor-option">
+                        <input type="radio" name="donor-type" id="radio-known" value="known"
+                            onchange="toggleDonorFields()">
+                        <span class="donor-option-label">
+                            <span class="icon-circle"><i class="fa-solid fa-user-check"></i></span>
+                            Share My Name
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ③ Known Donor Fields (hidden by default) -->
+            <div id="donor-fields" class="mb-7 space-y-4 overflow-hidden"
+                style="max-height:0;opacity:0;transition:max-height .5s ease,opacity .4s ease;">
+                <div>
+                    <label class="block text-xs font-bold text-red-700 uppercase tracking-wider mb-1">Full Name</label>
+                    <input type="text" id="donor-name" class="input-brand" placeholder="e.g. Kwame Mensah">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-red-700 uppercase tracking-wider mb-1">Phone
+                        Number</label>
+                    <div class="relative">
+                        <span
+                            class="absolute left-3.5 top-1/2 -translate-y-1/2 text-red-400 text-sm font-bold">+233</span>
+                        <input type="tel" id="donor-phone" class="input-brand pl-16" placeholder="5X XXX XXXX"
+                            maxlength="10">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ④ Email (always shown) -->
+            <div class="mb-7">
+                <label class="block text-xs font-bold text-red-700 uppercase tracking-wider mb-1">
+                    <i class="fa-solid fa-envelope mr-1"></i> Email Address <span class="text-red-400">(for
+                        receipt)</span>
+                </label>
+                <input type="email" id="donor-email" class="input-brand" placeholder="you@example.com">
+            </div>
+
+            <!-- ⑤ Submit -->
+            <button id="donate-btn" onclick="initiateDonation()"
+                class="btn-brand w-full py-4 text-base flex items-center justify-center gap-2">
+                <i class="fa-solid fa-lock"></i>
+                <span id="btn-label">Give Now (GHS 100)</span>
+            </button>
+
+            <p class="text-center text-xs text-red-400 mt-4 flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-shield-halved"></i>
+                Secured by Paystack · No card data stored by us
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════ QUOTE BANNER ════════════════════════ -->
+    <section class="py-20 px-6 text-center"
+        style="background:linear-gradient(135deg,#7f1d1d,#991b1b,#b91c1c);position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns=\"
+            http://www.w3.org/2000/svg\" width=\"40\" height=\"40\">
+            <circle cx=\"20\" cy=\"20\" r=\"1\" fill=\"rgba(255,255,255,0.06)\" /></svg>');">
+        </div>
+        <div class="relative z-10 max-w-2xl mx-auto">
+            <i class="fa-solid fa-quote-left text-red-300/40 text-6xl mb-4"></i>
+            <p class="brand-serif text-2xl md:text-3xl text-white leading-relaxed italic mb-6">
+                "Every child deserves a champion — an adult who will never give up on them."
+            </p>
+            <span class="text-red-200 text-sm font-semibold">— Rita Pierson</span>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════ FOOTER ══════════════════════════════ -->
+    <footer class="py-10 px-4 md:px-8 border-t border-red-100">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="https://firebasestorage.googleapis.com/v0/b/mealone-29b00.firebasestorage.app/o/WhatsApp%20Image%202026-01-27%20at%207.32.38%20AM.jpeg?alt=media&token=6913ddcf-3f97-40a7-9164-9e0b77eab524"
+                    alt="CMF logo" class="app-logo w-10 h-10">
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-[.2em] text-red-500">CMF UDS</p>
+                    <p class="font-bold text-red-900 text-sm">Orphanage Giving Portal</p>
+                </div>
+            </div>
+            <p class="text-red-700/60 text-xs text-center">&copy; 2026 CMF UDS. All donations are used solely for
+                orphanage welfare.</p>
+            <div class="flex gap-4 text-red-300">
+                <i class="fa-brands fa-facebook text-xl hover:text-red-600 cursor-pointer transition"></i>
+                <i class="fa-brands fa-instagram text-xl hover:text-red-600 cursor-pointer transition"></i>
+                <i class="fa-brands fa-whatsapp text-xl hover:text-red-600 cursor-pointer transition"></i>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ═══════════════════════════════ TOAST ══════════════════════════════ -->
+    <div id="toast"></div>
+
+
+    <!-- ═══════════════════════════════ SUCCESS MODAL ══════════════════════ -->
+    <div id="success-overlay" class="success-overlay" style="display:none;">
+        <div class="success-card">
+            <div class="checkmark-circle"><i class="fa-solid fa-check"></i></div>
+            <h2 class="brand-serif text-2xl text-red-900 mb-2">God Bless You!</h2>
+            <p class="text-red-700/80 text-sm leading-relaxed mb-1">
+                Your gift of <strong id="s-amount" class="text-red-700"></strong> has been received.
+            </p>
+            <p id="s-name-line" class="text-red-700/80 text-sm mb-5 hidden">
+                Thank you, <strong id="s-name" class="text-red-900"></strong>. A confirmation SMS has been sent to your
+                phone.
+            </p>
+            <p id="s-anon-line" class="text-red-700/80 text-sm mb-5">
+                You've made an anonymous contribution. Your generosity matters!
+            </p>
+            <button onclick="closeSuccess()" class="btn-brand w-full py-3 font-bold">
+                <i class="fa-solid fa-heart mr-2"></i>Close
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════ JAVASCRIPT ════════════════════════ -->
+    <script>
+        /* ────────────────────────────────
+           CONFIG — Replace with your keys
+        ──────────────────────────────── */
+        const PAYSTACK_PUBLIC_KEY = 'pk_live_47d15f1a19db665d6400b53169c171a0ae110d97';  // e.g. pk_live_xxxx or pk_test_xxxx
+        const WORKER_URL = 'https://donatetogo.christianmedicalfellowshipuds.workers.dev'; // your Cloudflare Worker URL
+
+        /* ────────────────────────────────
+           Amount chip logic
+        ──────────────────────────────── */
+        function selectChip(el) {
+            document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            const val = el.dataset.amount;
+            document.getElementById('amount-input').value = val;
+            updateBtnLabel(val);
+        }
+
+        function onCustomAmount(el) {
+            document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('active'));
+            updateBtnLabel(el.value);
+        }
+
+        function updateBtnLabel(val) {
+            const num = parseFloat(val);
+            const label = (!val || isNaN(num) || num <= 0) ? 'Give Now' : `Give Now (GHS ${formatNum(num)})`;
+            document.getElementById('btn-label').textContent = label;
+        }
+
+        function formatNum(n) {
+            return Number.isInteger(n) ? n : n.toFixed(2);
+        }
+
+        /* ────────────────────────────────
+           Donor identity toggle
+        ──────────────────────────────── */
+        function toggleDonorFields() {
+            const isKnown = document.getElementById('radio-known').checked;
+            const fields = document.getElementById('donor-fields');
+            if (isKnown) {
+                fields.style.maxHeight = '300px';
+                fields.style.opacity = '1';
+            } else {
+                fields.style.maxHeight = '0';
+                fields.style.opacity = '0';
+            }
+        }
+
+        /* ────────────────────────────────
+           Validation helpers
+        ──────────────────────────────── */
+        function showToast(msg, type = '') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'show' + (type ? ' ' + type : '');
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => t.className = '', 3500);
+        }
+
+        function validateForm() {
+            const amount = parseFloat(document.getElementById('amount-input').value);
+            const email = document.getElementById('donor-email').value.trim();
+            const isKnown = document.getElementById('radio-known').checked;
+
+            if (!amount || amount < 1) { showToast('Please enter a valid donation amount.', 'error'); return false; }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Please enter a valid email address.', 'error'); return false; }
+            if (isKnown) {
+                const name = document.getElementById('donor-name').value.trim();
+                const phone = document.getElementById('donor-phone').value.trim();
+                if (!name) { showToast('Please enter your full name.', 'error'); return false; }
+                if (!phone || phone.length < 9) { showToast('Please enter a valid phone number.', 'error'); return false; }
+            }
+            return true;
+        }
+
+        /* ────────────────────────────────
+           Paystack payment initiation
+        ──────────────────────────────── */
+        function initiateDonation() {
+            if (!validateForm()) return;
+
+            const amount = parseFloat(document.getElementById('amount-input').value);
+            const email = document.getElementById('donor-email').value.trim();
+            const isKnown = document.getElementById('radio-known').checked;
+            const name = isKnown ? document.getElementById('donor-name').value.trim() : 'Anonymous';
+            const phone = isKnown ? document.getElementById('donor-phone').value.trim() : '';
+            const anonymous = !isKnown;
+
+            const btn = document.getElementById('donate-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Opening secure gateway…';
+
+            const handler = PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY,
+                email: email,
+                amount: Math.round(amount * 100),   // Paystack uses pesewas
+                currency: 'GHS',
+                ref: 'CMF_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8).toUpperCase(),
+                label: name !== 'Anonymous' ? name : 'Anonymous Donor',
+                metadata: {
+                    custom_fields: [
+                        { display_name: 'Donor Name', variable_name: 'donor_name', value: name },
+                        { display_name: 'Donor Phone', variable_name: 'donor_phone', value: phone },
+                        { display_name: 'Anonymous', variable_name: 'anonymous', value: anonymous ? 'Yes' : 'No' }
+                    ]
+                },
+                callback: function (response) {
+                    handlePaymentSuccess(response, { amount, email, name, phone, anonymous });
+                },
+                onClose: function () {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i><span id="btn-label">Give Now (GHS ' + formatNum(amount) + ')</span>';
+                    showToast('Payment window closed.', '');
+                }
+            });
+
+            handler.openIframe();
+        }
+
+        /* ────────────────────────────────
+           Post-payment processing
+        ──────────────────────────────── */
+        async function handlePaymentSuccess(response, donor) {
+            const btn = document.getElementById('donate-btn');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Recording your gift…';
+
+            try {
+                const payload = {
+                    reference: response.reference,
+                    amount: Math.round(donor.amount * 100),
+                    currency: 'GHS',
+                    anonymous: donor.anonymous,
+                    donor_name: donor.anonymous ? null : donor.name,
+                    donor_phone: donor.anonymous ? null : ('+233' + donor.phone.replace(/^0/, '')),
+                    donor_email: donor.email,
+                    status: 'success'
+                };
+
+                await fetch(WORKER_URL + '/api/donations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (e) {
+                console.warn('Worker record call failed (non-critical):', e);
+            }
+
+            // Show success overlay
+            document.getElementById('s-amount').textContent = 'GHS ' + formatNum(donor.amount);
+
+            if (!donor.anonymous) {
+                document.getElementById('s-name').textContent = donor.name;
+                document.getElementById('s-name-line').classList.remove('hidden');
+                document.getElementById('s-anon-line').classList.add('hidden');
+            } else {
+                document.getElementById('s-name-line').classList.add('hidden');
+                document.getElementById('s-anon-line').classList.remove('hidden');
+            }
+
+            document.getElementById('success-overlay').style.display = 'flex';
+
+            // Reset form
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i><span>Give Now (GHS 100)</span>';
+            document.getElementById('amount-input').value = 100;
+            document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('active'));
+            document.querySelector('[data-amount="100"]').classList.add('active');
+            document.getElementById('donor-email').value = '';
+            if (!donor.anonymous) {
+                document.getElementById('donor-name').value = '';
+                document.getElementById('donor-phone').value = '';
+            }
+        }
+
+        function closeSuccess() {
+            document.getElementById('success-overlay').style.display = 'none';
+        }
+
+        /* ────────────────────────────────
+           Animated counters (Intersection Observer)
+        ──────────────────────────────── */
+        function animateCounter(el, target, duration = 1800) {
+            const start = performance.now();
+            const isLarge = target > 9999;
+
+            function step(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+
+                if (isLarge && current >= 1000) {
+                    el.textContent = (current / 1000).toFixed(1) + 'K+';
+                } else {
+                    el.textContent = current + (progress >= 1 && target >= 10 ? '+' : '');
+                }
+
+                if (progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        const counterObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.counter, 10);
+                    animateCounter(el, target);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        document.querySelectorAll('[data-counter]').forEach(el => counterObserver.observe(el));
+
+        /* ────────────────────────────────
+           Hero image parallax + load
+        ──────────────────────────────── */
+        const heroImg = document.getElementById('hero-img');
+        heroImg.onload = () => heroImg.classList.add('loaded');
+        if (heroImg.complete) heroImg.classList.add('loaded');
+    </script>
+
+</body>
+
+</html>
