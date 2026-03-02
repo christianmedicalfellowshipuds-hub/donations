@@ -594,7 +594,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div class="metric-card metric-main slide-up text-center">
                 <i class="fa-solid fa-child text-red-200 text-3xl mb-2"></i>
-                <h2 class="text-4xl font-black" data-counter="500" id="ctr-children">0</h2>
+                <h2 class="text-4xl font-black" data-counter="120" id="ctr-children">0</h2>
                 <p class="text-red-100 text-xs font-bold uppercase tracking-wider mt-1">Children Supported</p>
             </div>
             <div class="metric-card slide-up text-center" style="animation-delay:.1s">
@@ -767,12 +767,17 @@
             <button id="donate-btn" onclick="initiateDonation()"
                 class="btn-brand w-full py-4 text-base flex items-center justify-center gap-2">
                 <i class="fa-solid fa-lock"></i>
-                <span id="btn-label">Give Now (GHS 100)</span>
+                <span id="btn-label">Give Now &mdash; GHS 101.96</span>
             </button>
 
-            <p class="text-center text-xs text-red-400 mt-4 flex items-center justify-center gap-1.5">
+            <!-- Fee breakdown hint -->
+            <p id="fee-hint" class="text-center text-xs text-red-400/80 mt-2 font-medium">
+                GHS 100 donation + GHS 1.96 processing fee
+            </p>
+
+            <p class="text-center text-xs text-red-400 mt-3 flex items-center justify-center gap-1.5">
                 <i class="fa-solid fa-shield-halved"></i>
-                Secured by Paystack · No card data stored by us
+                Secured by Paystack &middot; No card data stored by us
             </p>
         </div>
     </section>
@@ -850,6 +855,7 @@
         ──────────────────────────────── */
         const PAYSTACK_PUBLIC_KEY = 'pk_live_47d15f1a19db665d6400b53169c171a0ae110d97';  // e.g. pk_live_xxxx or pk_test_xxxx
         const WORKER_URL = 'https://donatetogo.christianmedicalfellowshipuds.workers.dev'; // your Cloudflare Worker URL
+        const PAYSTACK_FEE_RATE = 0.0196;  // 1.96% passed on to donor
 
         /* ────────────────────────────────
            Amount chip logic
@@ -867,10 +873,23 @@
             updateBtnLabel(el.value);
         }
 
+        function calcTotal(donation) {
+            return donation * (1 + PAYSTACK_FEE_RATE);
+        }
+
         function updateBtnLabel(val) {
             const num = parseFloat(val);
-            const label = (!val || isNaN(num) || num <= 0) ? 'Give Now' : `Give Now (GHS ${formatNum(num)})`;
-            document.getElementById('btn-label').textContent = label;
+            if (!val || isNaN(num) || num <= 0) {
+                document.getElementById('btn-label').textContent = 'Give Now';
+                document.getElementById('fee-hint').textContent = '';
+                return;
+            }
+            const fee = num * PAYSTACK_FEE_RATE;
+            const total = num + fee;
+            document.getElementById('btn-label').textContent =
+                `Give Now — GHS ${formatNum(total)}`;
+            document.getElementById('fee-hint').textContent =
+                `GHS ${formatNum(num)} donation + GHS ${fee.toFixed(2)} processing fee`;
         }
 
         function formatNum(n) {
@@ -925,7 +944,10 @@
         function initiateDonation() {
             if (!validateForm()) return;
 
-            const amount = parseFloat(document.getElementById('amount-input').value);
+            const donation = parseFloat(document.getElementById('amount-input').value);
+            const fee = donation * PAYSTACK_FEE_RATE;
+            const total = donation + fee;   // what Paystack will charge the donor
+
             const email = document.getElementById('donor-email').value.trim();
             const isKnown = document.getElementById('radio-known').checked;
             const name = isKnown ? document.getElementById('donor-name').value.trim() : 'Anonymous';
@@ -939,7 +961,7 @@
             const handler = PaystackPop.setup({
                 key: PAYSTACK_PUBLIC_KEY,
                 email: email,
-                amount: Math.round(amount * 100),   // Paystack uses pesewas
+                amount: Math.round(total * 100),   // total inc. fee, in pesewas
                 currency: 'GHS',
                 ref: 'CMF_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8).toUpperCase(),
                 label: name !== 'Anonymous' ? name : 'Anonymous Donor',
@@ -947,15 +969,18 @@
                     custom_fields: [
                         { display_name: 'Donor Name', variable_name: 'donor_name', value: name },
                         { display_name: 'Donor Phone', variable_name: 'donor_phone', value: phone },
-                        { display_name: 'Anonymous', variable_name: 'anonymous', value: anonymous ? 'Yes' : 'No' }
+                        { display_name: 'Anonymous', variable_name: 'anonymous', value: anonymous ? 'Yes' : 'No' },
+                        { display_name: 'Donation (ex fee)', variable_name: 'net_donation', value: donation.toFixed(2) }
                     ]
                 },
                 callback: function (response) {
-                    handlePaymentSuccess(response, { amount, email, name, phone, anonymous });
+                    // Pass the net donation (ex-fee) to D1 — that's what orphanage receives
+                    handlePaymentSuccess(response, { amount: donation, total, email, name, phone, anonymous });
                 },
                 onClose: function () {
                     btn.disabled = false;
-                    btn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i><span id="btn-label">Give Now (GHS ' + formatNum(amount) + ')</span>';
+                    updateBtnLabel(donation);
+                    btn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i><span id="btn-label">Give Now — GHS ' + formatNum(total) + '</span>';
                     showToast('Payment window closed.', '');
                 }
             });
@@ -1070,4 +1095,3 @@
 </body>
 
 </html>
-
